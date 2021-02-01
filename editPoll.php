@@ -10,7 +10,7 @@
     }
     $poll_id = $_GET["poll"];
     $poll = fetchPoll($conn, $poll_id);
-    if ($_SESSION["userid"] != $poll["pollsAuthor"])
+    if ($_SESSION["userid"] != $poll["usersId"])
     {
         header("location: profile.php?error=wrongaccess");
         exit();

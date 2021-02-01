@@ -2,58 +2,22 @@
 
     function emptyInputSignup($uid, $email, $pwd, $pwdrepeat)
     {
-        $result;
-        if (empty($uid) || empty($email) || empty($pwd) || empty($pwdrepeat))
-        {
-            $result = true;
-        }
-        else
-        {
-            $result = false;
-        }
-        return $result;
+        return (empty($uid) || empty($email) || empty($pwd) || empty($pwdrepeat)) ? true : false;
     }
 
     function invalidUid($uid)
     {
-        $result;
-        if (!preg_match("/^[a-zA-Z0-9]*$/", $uid))
-        {
-            $result = true;
-        }
-        else
-        {
-            $result = false;
-        }
-        return $result;
+        return (!preg_match("/^[a-zA-Z0-9]*$/", $uid)) ? true : false;
     }
 
     function invalidEmail($email)
     {
-        $result;
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-        {
-            $result = true;
-        }
-        else
-        {
-            $result = false;
-        }
-        return $result;
+        return (!filter_var($email, FILTER_VALIDATE_EMAIL)) ? true : false;
     }
 
     function matchPassword($pwd, $pwdrepeat)
     {
-        $result;
-        if ($pwd !== $pwdrepeat)
-        {
-            $result = true;
-        }
-        else
-        {
-            $result = false;
-        }
-        return $result;
+        return ($pwd !== $pwdrepeat) ? true : false;
     }
 
     function uidExists($conn, $uid, $email)
@@ -68,15 +32,12 @@
         mysqli_stmt_bind_param($stmt, "ss", $uid, $email);
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
-        if($row = mysqli_fetch_assoc($resultData))
+        mysqli_stmt_close($stmt);
+        if ($row = mysqli_fetch_assoc($resultData))
         {
             return $row;
         }
-        else 
-        {
-            return false;
-        }
-        mysqli_stmt_close($stmt);
+        return false;
     }
 
     function createUser($conn, $uid, $email, $pwd)
@@ -114,7 +75,7 @@
         else if ($checkPwd === true) // login the user into the website
         {
             session_start(); //starting a session
-            $_SESSION["userid"] = $uidExists["usersId"];
+            $_SESSION["userid"] = $uidExists["id"];
             $_SESSION["useruid"] = $uidExists["usersUid"];
             header("location: ../index.php");
             exit();
@@ -139,7 +100,7 @@
 
     function fetchUsersPolls($conn, $user)
     {
-        $sql = "SELECT id, pollsQues FROM polls WHERE pollsAuthor = $user;";
+        $sql = "SELECT id, pollsQues FROM polls WHERE usersId = $user;";
         $stmt = mysqli_stmt_init($conn); //initialize prepared statement
         if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
         {
@@ -223,7 +184,7 @@
 
     function createPoll($conn, $question, $start, $end, $user, $desc, $private)
     {
-        $sql = "INSERT INTO polls (pollsQues, pollsDesc, pollsStart, pollsEnd, pollsAuthor, pollsPrivate) VALUES (?, ?, ?, ?, ?, ?);"; //to avoid sql injection
+        $sql = "INSERT INTO polls (pollsQues, pollsDesc, pollsStart, pollsEnd, usersId, pollsPrivate) VALUES (?, ?, ?, ?, ?, ?);"; //to avoid sql injection
         $stmt = mysqli_stmt_init($conn); //initialize prepared statement
         if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
         {

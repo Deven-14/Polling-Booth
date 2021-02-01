@@ -21,7 +21,7 @@
                     foreach($polls as $poll)
                     {
                         echo "<div class='poll-preview'><a href=vote.php?id=" . $poll["id"] . ">" . $poll["pollsQues"] . "</a>";
-                        //echo "<button><a href='editPoll.php?poll=".$poll["id"]."'>Edit</a></button>";
+                        echo "<button><a href='editPoll.php?poll=".$poll["id"]."'>Edit</a></button>";
                         echo "<button><a href='includes/deletePoll.inc.php?poll=".$poll["id"]."'>Delete</a></button></div>";
                     }
                 }

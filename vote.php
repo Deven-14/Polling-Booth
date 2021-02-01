@@ -86,7 +86,7 @@
                         $error = $_GET["error"];
                         if($error == "none")
                         {
-                            echo "<p>Vote cast successfully!</p>";
+                            echo "<p>Poll created successfully!</p>";
                         }
                         else if($error == "stmtfailed")
                         {

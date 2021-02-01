@@ -29,5 +29,5 @@
         createOption($conn, $option, $pollId);
     }
 
-    header("location: ../vote.php?id=".$pollId);
+    header("location: ../vote.php?id=".$pollId."&error=none");
 
