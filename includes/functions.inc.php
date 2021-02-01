@@ -152,9 +152,9 @@
         return $rows;
     }
 
-    function fetchAllPolls($conn)
+    function fetchPublicPolls($conn)
     {
-        $sql = "SELECT * FROM polls WHERE DATE(NOW()) BETWEEN pollsStart AND pollsEnd;"; 
+        $sql = "SELECT * FROM polls WHERE (DATE(NOW()) BETWEEN pollsStart AND pollsEnd) AND pollsPrivate = 'N';";
         $stmt = mysqli_stmt_init($conn); //initialize prepared statement
         if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
         {
@@ -221,16 +221,16 @@
         mysqli_stmt_close($stmt);
     }
 
-    function createPoll($conn, $question, $start, $end, $user, $desc)
+    function createPoll($conn, $question, $start, $end, $user, $desc, $private)
     {
-        $sql = "INSERT INTO polls (pollsQues, pollsDesc, pollsStart, pollsEnd, pollsAuthor) VALUES (?, ?, ?, ?, ?);"; //to avoid sql injection
+        $sql = "INSERT INTO polls (pollsQues, pollsDesc, pollsStart, pollsEnd, pollsAuthor, pollsPrivate) VALUES (?, ?, ?, ?, ?, ?);"; //to avoid sql injection
         $stmt = mysqli_stmt_init($conn); //initialize prepared statement
         if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
         {
             header("location: ../createPoll.php?error=stmtfailed");
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "sssss", $question, $desc, $start, $end, $user);
+        mysqli_stmt_bind_param($stmt, "ssssss", $question, $desc, $start, $end, $user, $private);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return mysqli_insert_id($conn);

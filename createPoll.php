@@ -39,6 +39,8 @@
                 </ul>
                 <input type="button" value="Add more fields" onclick="addField()">
                 <input type="button" value="Remove a field" onclick="removeField()"><br>
+                <label for="poll-type">Private poll?</label>
+                <input type="checkbox" name="private" value="Y" id="poll-type"><br>
                 <button type="submit" name="submit" value="submit">Post</button>
             </form>
         </div>

@@ -2,7 +2,7 @@
     include_once "header.php";
     require_once "includes/dbh.inc.php";
     require_once "includes/functions.inc.php";
-    $polls = fetchAllPolls($conn);
+    $polls = fetchPublicPolls($conn);
 ?>
         <div class="polls">
             <h2>Polls</h2>
