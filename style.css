@@ -235,6 +235,6 @@ input, select, textarea
 
 .filler
 {
-    background-color: thistle;
+    background-color:red; /*thistle;*/
     width: 80%;
 }
