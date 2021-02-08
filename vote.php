@@ -27,9 +27,10 @@
         }
         else
         {
+            echo '<div class="poll-center">';
             if (pollAnswered($conn, $_SESSION["userid"], $_GET["id"]) === true && pollExpired($poll) === true)
             { 
-                echo "<p>Poll answered</p>";
+                echo "<h2 style='color:white;'>Poll answered - </h2>";
                 $rows = number_of_choices($conn, $_GET["id"]);
                 $sum = array_sum(array_column($rows, 'choice_count'));  
                 $selectedChoiceIds = array_column($rows, 'choicesId');
@@ -37,7 +38,7 @@
                 {
                     if(!in_array($choice["id"], $selectedChoiceIds))
                     {
-                        echo "<div class=choice><div class='filler'>" . $choice["choicesName"] . " - 0%</div></div>";
+                        echo "<div class='choice poll-option'><div class='filler'>" . $choice["choicesName"] . " - 0%</div></div>";
                     }
                     else
                     {
@@ -45,7 +46,7 @@
                         {
                             if ($row['choicesId'] == $choice["id"]) 
                             {
-                                echo "<div class=choice><div class='filler'>" . $row["choicesName"] . " - " . round($row["choice_count"]/$sum, 3) * 100 . "%</div></div>";
+                                echo "<div class='choice poll-option'><div class='filler'>" . $row["choicesName"] . " - " . round($row["choice_count"]/$sum, 3) * 100 . "%</div></div>";
                                 break;
                             }
                         }
@@ -54,27 +55,28 @@
                 }
                 exit();
             }
+            echo '</div>';
         }
     ?>
-    <div class="poll-question">
+    <div class="poll-center" style="color:#66fcf1;">
         <form action="includes/vote.inc.php" method="POST">
             <?php 
-                echo "<p>".$poll["pollsQues"]."</p>";
+                echo "<h2>".$poll["pollsQues"]."</h2>";
                 if($poll["pollsDesc"])
                 {
                     echo "<p>".$poll["pollsDesc"]."</p><br>";
                 }
             ?>
-            <div class="poll-options">
+            <div>
                 <?php
                     if(!empty($choices))
                     {
                         foreach($choices as $index=>$choice)
                         {
-                            echo "<div class='choice'><input type='radio' name='choice' value=" . $choice["id"] . " id=" . $index . ">";
+                            echo "<div class='choice poll-option'><input type='radio' name='choice' value=" . $choice["id"] . " id=" . $index . ">";
                             echo "<label for=" . $index . ">" . $choice["choicesName"] . "</label></div>";
                         }
-                        echo '<button type="submit" name="submit">Submit</button>';
+                        echo '<button class="submit-btn-center" type="submit" name="submit">Submit</button>';
                         echo '<input type="hidden" name="poll" value=' . $id .'>';
                     }
                     else

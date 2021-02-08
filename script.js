@@ -53,6 +53,8 @@ function addField()
         input.type = "text";
         input.placeholder = 'Category ' + (options + 1);
         input.name = 'options[]';
+        input.classList.add("input-text");
+        input.classList.add("js-input");
         input.required = true;
         node.appendChild(input);
         container.appendChild(node);
