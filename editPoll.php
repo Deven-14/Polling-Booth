@@ -17,6 +17,7 @@
     }
     $choices = fetchChoices($conn, $poll_id);
 ?>
+        <div class="container"></div>
         <div>
             <form action="includes/createPoll.inc.php" method="post">
                 <label for="question">Question </label>
