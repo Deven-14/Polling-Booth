@@ -1,4 +1,4 @@
-<?php
+ <?php
 
     function emptyInputSignup($uid, $email, $pwd, $pwdrepeat)
     {
@@ -22,34 +22,37 @@
 
     function uidExists($conn, $uid, $email)
     {
-        $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;"; //to avoid sql injection
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
+        // placeholders to avoid sql injection
+        $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
+        //initialize prepared statement
+        $stmt = mysqli_stmt_init($conn); 
+        if (!mysqli_stmt_prepare($stmt, $sql))
         {
             header("location: ../signup.php?error=stmtfailed");
             exit();
         }
+        // bind parameters to prepared statement
         mysqli_stmt_bind_param($stmt, "ss", $uid, $email);
         mysqli_stmt_execute($stmt);
-        $resultData = mysqli_stmt_get_result($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         mysqli_stmt_close($stmt);
-        if ($row = mysqli_fetch_assoc($resultData))
-        {
-            return $row;
-        }
-        return false;
+        return ($row = mysqli_fetch_assoc($result)) ? $row : false;
     }
 
     function createUser($conn, $uid, $email, $pwd)
     {
-        $sql = "INSERT INTO users (usersUid,usersEmail,usersPwd) VALUES (?, ?, ?);"; //to avoid sql injection
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
+        // placeholders to avoid sql injection
+        $sql = "INSERT INTO users (usersUid,usersEmail,usersPwd) VALUES (?, ?, ?);";
+        //initialize prepared statement
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql))
         {
-            header("location: ../signup.php?error=stmtfailed");
+            header("location: ../login.php?error=stmtfailed");
             exit();
         }
-        $hashedpwd = password_hash($pwd, PASSWORD_DEFAULT); //default hashing algorithm
+        //default hashing algorithm
+        $hashedpwd = password_hash($pwd, PASSWORD_DEFAULT);
+        // bind parameters to prepared statement
         mysqli_stmt_bind_param($stmt, "sss", $uid, $email, $hashedpwd);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
@@ -59,7 +62,7 @@
 
     function loginUser($conn, $username, $pwd)
     {
-        $uidExists = uidExists($conn, $username, $username); //associative array
+        $uidExists = uidExists($conn, $username, $username);
         if ($uidExists === false)
         {
             header("location: ../login.php?error=wronglogin");
@@ -82,11 +85,16 @@
         }
     }
 
+    function isLoggedIn($session)
+    {
+        return isset($session["userid"]) ? true : false;
+    }
+
     function fetchPoll($conn, $id)
     {
         $sql = "SELECT * FROM polls WHERE id = ?;"; 
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql))
         {
             header("location: ../polls.php?error=stmtfailed");
             exit();
@@ -98,95 +106,11 @@
         return $row;
     }
 
-    function fetchUsersPolls($conn, $user)
-    {
-        $sql = "SELECT id, pollsQues FROM polls WHERE usersId = $user;";
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
-        {
-            header("location: index.php?error=stmtfailed");
-            exit();
-        }
-        mysqli_stmt_execute($stmt);
-        $resultData = mysqli_stmt_get_result($stmt);
-        $rows = mysqli_fetch_all($resultData, MYSQLI_ASSOC);
-        return $rows;
-    }
-
-    function fetchPublicPolls($conn)
-    {
-        $sql = "SELECT * FROM polls WHERE (DATE(NOW()) BETWEEN pollsStart AND pollsEnd) AND pollsPrivate = 'N';";
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
-        {
-            header("location: ../index.php?error=stmtfailed");
-            exit();
-        }
-        mysqli_stmt_execute($stmt);
-        $resultData = mysqli_stmt_get_result($stmt);
-        $rows = mysqli_fetch_all($resultData, MYSQLI_ASSOC);
-        return $rows;
-    }
-
-    function fetchChoices($conn, $id)
-    {
-        $sql = "SELECT * FROM choices WHERE pollsId = ?;"; 
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
-        {
-            header("location: ../profile.php?error=stmtfailed");
-            exit();
-        }
-        mysqli_stmt_bind_param($stmt, "s", $id);
-        mysqli_stmt_execute($stmt);
-        $resultData = mysqli_stmt_get_result($stmt);
-        $rows = mysqli_fetch_all($resultData, MYSQLI_ASSOC);
-        return $rows;
-    }
-
-    function pollsAnswered($conn, $user)
-    {
-        $sql = "SELECT polls.id, polls.pollsQues FROM polls JOIN answers ON answers.pollsId = polls.id WHERE answers.usersId = $user;";
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
-        {
-            header("location: ?error=stmtfailed");
-            exit();
-        }
-        mysqli_stmt_execute($stmt);
-        $resultData = mysqli_stmt_get_result($stmt);
-        $rows = mysqli_fetch_all($resultData, MYSQLI_ASSOC);
-        return $rows;
-    }
-
-    function pollAnswered($conn, $user, $poll)
-    {
-        $sql = "SELECT * FROM answers WHERE usersId = ? AND pollsId = ?;"; //to avoid sql injection
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
-        {
-            header("location: ../polls.php?error=stmtfailed");
-            exit();
-        }
-        mysqli_stmt_bind_param($stmt, "ss", $user, $poll);
-        mysqli_stmt_execute($stmt);
-        $resultData = mysqli_stmt_get_result($stmt);
-        if($row = mysqli_fetch_assoc($resultData))
-        {
-            return true;
-        }
-        else 
-        {
-            return false;
-        }
-        mysqli_stmt_close($stmt);
-    }
-
     function createPoll($conn, $question, $start, $end, $user, $desc, $private)
     {
         $sql = "INSERT INTO polls (pollsQues, pollsDesc, pollsStart, pollsEnd, usersId, pollsPrivate) VALUES (?, ?, ?, ?, ?, ?);"; //to avoid sql injection
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql))
         {
             header("location: ../createPoll.php?error=stmtfailed");
             exit();
@@ -199,9 +123,9 @@
 
     function createOption($conn, $option, $pollId)
     {
-        $sql = "INSERT INTO choices (choicesName, pollsId) VALUES (?, ?);"; //to avoid sql injection
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
+        $sql = "INSERT INTO choices (choicesName, pollsId) VALUES (?, ?);"; 
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql))
         {
             header("location: ../createPoll.php?error=stmtfailed");
             exit();
@@ -209,6 +133,66 @@
         mysqli_stmt_bind_param($stmt, "ss", $option, $pollId);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
+    }
+
+    function fetchUsersPolls($conn, $user)
+    {
+        $sql = "SELECT * FROM polls WHERE usersId = $user;";
+        $result = mysqli_query($conn, $sql);
+        $rowsNum = mysqli_num_rows($result);
+        if ($rowsNum > 0)
+        {
+            $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $rows;
+        }
+        return false;        
+    }
+
+    function fetchPublicPolls($conn)
+    {
+        $sql = "SELECT * FROM polls WHERE (DATE(NOW()) BETWEEN pollsStart AND pollsEnd) AND pollsPrivate = 'N';";
+        $result = mysqli_query($conn, $sql);
+        $rowsNum = mysqli_num_rows($result);
+        if ($rowsNum > 0)
+        {
+            $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $rows;
+        }
+        return false; 
+    }
+
+    function fetchChoices($conn, $id)
+    {
+        $sql = "SELECT * FROM choices WHERE pollsId = $id;"; 
+        $result = mysqli_query($conn, $sql);
+        $rowsNum = mysqli_num_rows($result);
+        if ($rowsNum > 0)
+        {
+            $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $rows;
+        }
+        return false;
+    }
+
+    function pollsAnswered($conn, $user)
+    {
+        $sql = "SELECT polls.id, polls.pollsQues FROM polls JOIN answers ON answers.pollsId = polls.id WHERE answers.usersId = $user;";
+        $result = mysqli_query($conn, $sql);
+        $rowsNum = mysqli_num_rows($result);
+        if ($rowsNum > 0)
+        {
+            $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $rows;
+        }
+        return false; 
+    }
+
+    function pollAnswered($conn, $user, $poll)
+    {
+        $sql = "SELECT * FROM answers WHERE usersId = $user AND pollsId = $poll;"; //to avoid sql injection
+        $result = mysqli_query($conn, $sql);
+        $rowsNum = mysqli_num_rows($result);
+        return ($rowsNum > 0) ? true : false;
     }
 
     function vote($conn, $user, $poll, $choice)
@@ -220,7 +204,7 @@
                         AND NOT EXISTS (SELECT id FROM answers WHERE usersId = ? AND pollsId = ?) 
                         LIMIT 1;";
         $stmt = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
+        if (!mysqli_stmt_prepare($stmt, $sql))
         {
             header("location: ../polls.php?error=stmtfailed");
             exit();
@@ -251,11 +235,6 @@
         return false;
     }
 
-    function isLoggedIn($session)
-    {
-        return isset($session["userid"]) ? true : false;
-    }
-
     function pollExpired($poll)
     {
         return (date("y-m-d") > $poll["pollsEnd"]) ? true : false;
@@ -263,34 +242,36 @@
 
     function deletePoll($conn, $pollId)
     {
-        $sql = "DELETE FROM polls WHERE id = $pollId;"; //to avoid sql injection
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
-        {
-            header("location: ../profile.php?error=stmtfailed");
-            exit();
-        }
-        if (!mysqli_stmt_execute($stmt))
+        $sql = "DELETE FROM polls WHERE id = $pollId;";
+        if (!mysqli_query($conn, $sql))
         {
             header("location: ../profile.php?error=failedtodelete");
             exit();
         }
-        mysqli_stmt_close($stmt);
     }
 
-    function deleteChoices($conn, $pollsId)
+    function deleteChoices($conn, $pollId)
     {
-        $sql = "DELETE FROM choices WHERE pollsId = $pollsId;"; //to avoid sql injection
-        $stmt = mysqli_stmt_init($conn); //initialize prepared statement
-        if (!mysqli_stmt_prepare($stmt, $sql)) //check if prepared statement worked
-        {
-            header("location: ../profile.php?error=stmtfailed");
-            exit();
-        }
-        if (!mysqli_stmt_execute($stmt))
+        $sql = "DELETE FROM choices WHERE pollsId = $pollId;";
+        if (!mysqli_query($conn, $sql))
         {
             header("location: ../profile.php?error=failedtodeletechoice");
             exit();
         }
+    }
+
+    function editDescField($conn, $pollId, $newDesc)
+    {
+        $sql = "UPDATE polls SET pollsDesc = ? WHERE id = $pollId;";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql))
+        {
+            header("location: ../profile.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $newDesc);
+        mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
+
+

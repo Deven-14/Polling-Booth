@@ -15,33 +15,21 @@
         header("location: profile.php?error=wrongaccess");
         exit();
     }
-    $choices = fetchChoices($conn, $poll_id);
+    $choices = fetchChoices($conn, $poll_id);  
 ?>
-        <div class="container"></div>
         <div>
-            <form action="includes/createPoll.inc.php" method="post">
-                <label for="question">Question </label>
-                <input type="text" name="question" value="<?php echo $poll['pollsQues'];?>"id="question" required><br>
-                <label for="desc">Question Description </label>
-                <input type="text" name="desc" value="<?php echo $poll['pollsDesc'];?>" id="desc"><br>
-                <label for="start">Start Date </label>
-                <input type="date" id="start" value="<?php echo $poll['pollsStart'];?>" name="start"><br>
-                <label for="end">End Date </label>
-                <input type="date" id="end" value="<?php echo $poll['pollsEnd'];?>" name="end"><br>
-                <script>
-                    setMinDateToday("start");
-                    setMinDateToday("end");
-                </script>
+            <form action="<?php echo 'includes/editPoll.inc.php?id=' . $poll_id?>" method="post">
+                <p> <?php echo $poll["pollsQues"];?> </p>
+                <input type="text" name="newDesc" value="<?php echo $poll["pollsDesc"];?>" id="desc"><br>
+                <button type="submit" name="submit" value="submit">Edit</button>
                 <ul id="options">
                 <?php
                     foreach($choices as $choice)
                     {
-                        echo "<li><input type='text' value='". $choice['choicesName'] ."'required></li>";
+                        echo "<li>" . $choice["choicesName"] . "</li>";
                     }
                 ?>
                 </ul>
-                <input type="button" value="Add more fields" onclick="addField()">
-                <input type="button" value="Remove a field" onclick="removeField()"><br>
             </form>
         </div>
     </body>
