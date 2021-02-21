@@ -26,13 +26,13 @@ $choices = fetchChoices($conn, $id);
 ?>
 <div>
     <?php
-    echo '<div class="poll-center" style="color:#66fcf1;">';
+    echo '<div class="poll-center">';
     if (pollAnswered($conn, $_SESSION["userid"], $_GET["id"]) === true && pollExpired($poll) === true) {
-        echo "<h2>" . $poll["pollsQues"] . "</h2>";
+        echo "<h2 style='color:#66fcf1;'>" . $poll["pollsQues"] . "</h2>";
         if ($poll["pollsDesc"]) {
-            echo "<p>" . $poll["pollsDesc"] . "</p><br>";
+            echo "<p>" . $poll["pollsDesc"] . "</p>";
         }
-        echo "<h3 style='color:white;'>Poll answered - </h3>";
+        echo "<h5 style='color:white;'>Poll answered - </h5>";
         $rows = number_of_choices($conn, $_GET["id"]);
         $sum = array_sum(array_column($rows, 'choice_count'));
         $selectedChoiceIds = array_column($rows, 'choicesId');
@@ -56,28 +56,26 @@ $choices = fetchChoices($conn, $id);
     }
     echo '</div>';
     ?>
-    <div class="poll-center" style="color:#66fcf1;">
+    <div class="poll-center">
         <form action="includes/vote.inc.php" method="POST">
             <?php
-            echo "<h2>" . $poll["pollsQues"] . "</h2>";
+            echo "<h2 style='color:#66fcf1;'>" . $poll["pollsQues"] . "</h2>";
             if ($poll["pollsDesc"]) {
                 echo "<p>" . $poll["pollsDesc"] . "</p><br>";
             }
             ?>
-            <div>
-                <?php
-                if (!empty($choices)) {
-                    foreach ($choices as $index => $choice) {
-                        echo "<div class='choice poll-option'><input type='radio' name='choice' value=" . $choice["id"] . " id=" . $index . ">";
-                        echo "<label for=" . $index . ">" . $choice["choicesName"] . "</label></div>";
-                    }
-                    echo '<button class="submit-btn-center" type="submit" name="submit">Submit</button></br>';
-                    echo '<input type="hidden" name="poll" value=' . $id . '>';
-                } else {
-                    echo "<p>Sorry no choices available!</p>";
+            <?php
+            if (!empty($choices)) {
+                foreach ($choices as $index => $choice) {
+                    echo "<div class='choice poll-option'><input type='radio' required name='choice' value=" . $choice["id"] . " id=" . $index . ">";
+                    echo "<label for=" . $index . ">" . $choice["choicesName"] . "</label></div>";
                 }
-                ?>
-            </div>
+                echo '<button class="submit-btn-center" type="submit" name="submit">Submit</button></br>';
+                echo '<input type="hidden" name="poll" value=' . $id . '>';
+            } else {
+                echo "<p>Sorry no choices available!</p>";
+            }
+            ?>
         </form>
     </div>
 </div>
@@ -94,3 +92,6 @@ if (isset($_GET["error"])) {
 }
 include_once "footer.php";
 ?>
+</body>
+
+</html>

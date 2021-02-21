@@ -1,7 +1,7 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
 body {
@@ -11,23 +11,9 @@ body {
 }
 
 nav {
-    /*position: fixed;
-    top: 0;
-    z-index: 1;*/
     width: 100%;
     line-height: 75px;
     height: 75px;
-}
-
-.nav-menu {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    z-index: 1;
-    /*background-color: #66fcf1;*/
-    list-style-type: none;
-    display: none;
-    border-radius: 10px;
 }
 
 .title {
@@ -43,22 +29,24 @@ a.title:hover {
     color: #66fcf1;
 }
 
+.nav-menu {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    z-index: 1;
+    list-style-type: none;
+    display: none;
+    border-radius: 10px;
+}
+
 .nav-bar {
     float: right;
 }
 
 .nav-bar button {
     display: block;
-    margin: 20px 30px;
-    padding: 5px 10px;
     background-color: rgb(255, 255, 255);
     border: none;
-}
-
-.nav-links {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    padding: 10px 30px;
 }
 
 .nav-menu li {
@@ -66,10 +54,14 @@ a.title:hover {
 }
 
 .nav-menu li a:hover {
-    /*background-color: rgba(138, 146, 216, 0.877);*/
-    /*background-color: #66fcf1;*/
     color: #66fcf1;
     box-shadow: 2px 2px;
+}
+
+.nav-links {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 10px 30px;
 }
 
 @media screen and (min-width: 780px) {
@@ -121,7 +113,7 @@ a.title:hover {
 }
 
 #sub-title {
-    font-family: monospace;
+    font-family: monaco, Consolas, Lucida Console, monospace;
     color: #66fcf1;
     font-size: 64px;
     margin-bottom: 10px;
@@ -226,7 +218,7 @@ textarea {
 }
 
 .choice {
-    width: 40%;
+    width: 80%;
     border: solid 2px white;
     margin: 10px;
 }
@@ -294,7 +286,7 @@ ul#options li {
 }
 
 .contact-form .input-text:focus+.label,
-.contact-form .input-text.not-empty+.label {
+.contact-form .input-text:not(:placeholder-shown)+.label {
     -webkit-transform: translateY(-29px);
     transform: translateY(-29px);
 }
@@ -313,7 +305,12 @@ ul#options li {
     transition: transform .2s ease-in-out, -webkit-transform .2s ease-in-out;
 }
 
-.contact-form .submit-btn {
+.contact-form #question::placeholder,
+.contact-form #description::placeholder {
+    color: #1f2833;
+}
+
+.submit-btn {
     display: inline-block;
     background-color: #66fcf1;
     color: black;
@@ -338,7 +335,8 @@ ul#options li {
     width: 200px;
     cursor: pointer;
     position: absolute;
-    left: 15%;
+    left: 50%;
+    transform: translateX(-80%);
 }
 
 .poll-container {
@@ -359,19 +357,35 @@ ul#options li {
     justify-content: center;
 }
 
+.prof-btn a {
+    color: black;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.prof-btn {
+    width: 130px;
+    margin: 5px;
+    padding: 0 5px 0 5px;
+}
+
 .poll-container a:hover {
     color: white;
 }
 
 .poll-container:hover {
-    background-color: rgb(31, 40, 51, 0.5);
+    background-color: rgba(77, 80, 85, 0.5);
     box-shadow: 3px 3px;
 }
 
 .poll-center {
+    max-width: 50%;
     position: relative;
-    left: 30%;
+    left: 50%;
+    transform: translateX(-50%);
     margin-top: 50px;
+    color: rgb(255, 255, 255);
 }
 
 .poll-option {
@@ -401,4 +415,35 @@ progress::-webkit-progress-value {
     margin: auto;
     padding: 10px;
     border-radius: 5px;
+}
+
+.desc {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.category {
+    margin-left: 5px;
+    background-color: #8b8b8b;
+    color: #66fcf1;
+    width: fit-content;
+}
+
+.footer-link {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
+}
+
+#google_translate_element {
+    padding: 15px;
+    background-color: #1f2833;
+    width: fit-content;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }

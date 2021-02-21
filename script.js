@@ -1,19 +1,16 @@
-function defaultDateToday(id)
-{
+function defaultDateToday(id) {
     var date = document.getElementById(id);
     var today = new Date().toISOString().split("T")[0];
     date.value = today;
 }
 
-function setMinDateToday(id)
-{
+function setMinDateToday(id) {
     var date = document.getElementById(id);
     var today = new Date().toISOString().split("T")[0];
     date.min = today;
 }
 
-function defaultDateTomorrow(id)
-{
+function defaultDateTomorrow(id) {
     var date = document.getElementById(id);
     var today = new Date();
     var tomorrow = new Date(today);
@@ -21,54 +18,44 @@ function defaultDateTomorrow(id)
     date.value = tomorrow.toISOString().split("T")[0];
 }
 
-function change()
-{
-    document.getElementById("middle").style.backgroundColor = document.getElementById("bg-color").value;
-}
-
 var menuStatus = false;
-function menuDropdown()
-{
-    if (menuStatus == false)
-    {
+
+function menuDropdown() {
+    if (menuStatus == false) {
         document.getElementsByClassName("nav-menu")[0].style.display = "block";
         menuStatus = true;
-    }
-    else if (menuStatus == true)
-    {
+    } else if (menuStatus == true) {
         document.getElementsByClassName("nav-menu")[0].style.display = "none";
         menuStatus = false;
-    }   
+    }
 }
 
-function addField()
-{
+function addField() {
     var options = document.getElementById("options").getElementsByTagName("li").length;
-    if (options < 5)
-    {
+    if (options < 5) {
         var container = document.getElementById("options");
         // Create an <input> element, set its type and name attributes
         var node = document.createElement("li");
         var input = document.createElement("input");
         input.type = "text";
-        input.placeholder = 'Category ' + (options + 1);
+        input.placeholder = 'Choice ' + (options + 1);
         input.name = 'options[]';
         input.classList.add("input-text");
         input.classList.add("js-input");
         input.required = true;
         node.appendChild(input);
         container.appendChild(node);
-        // Append a line break 
-        //container.appendChild(document.createElement("br"));
-    }   
+    }
 }
 
-function removeField()
-{
+function removeField() {
     var options = document.getElementById("options").getElementsByTagName("li").length;
-    if (options > 2)
-    {
+    if (options > 2) {
         var container = document.getElementById("options");
         container.removeChild(container.lastChild);
     }
+}
+
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
 }

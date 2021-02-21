@@ -14,20 +14,24 @@ $AnsweredPolls = pollsAnswered($conn, $user);
 ?>
 <div class="polls conatiner">
     <div class="row">
-        <h2>Hi user <?php echo $_SESSION["useruid"]; ?>!</h2>
+        <div class="error-block">
+        <h2>Hello user <?php echo $_SESSION["useruid"]; ?>!</h2>
+        </div>
         <h2>Your polls:</h2>
         <?php
         if (!empty($polls)) {
             foreach ($polls as $poll) {
                 echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $poll["id"] . ">" . $poll["pollsQues"] . "</a>";
+                $category = ($poll['pollsPrivate'] === 'Y') ? "Private" : "Public";
+                echo "<h6 class='category'>". $category . "</h6>";
                 if ($poll["pollsDesc"]) {
-                    echo "<p>" . $poll["pollsDesc"] . "</p>";
+                    echo "<p class='desc'>" . $poll["pollsDesc"] . "</p>";
                 }
-                echo "<button><a href='editPoll.php?poll=" . $poll["id"] . "'>Edit</a></button>";
-                echo "<button><a href='includes/deletePoll.inc.php?poll=" . $poll["id"] . "'>Delete</a></button></div>";
+                echo "<button class='submit-btn prof-btn'><a href='editPoll.php?poll=" . $poll["id"] . "'>Edit</a></button>";
+                echo "<button class='submit-btn prof-btn'><a href='includes/deletePoll.inc.php?poll=" . $poll["id"] . "'>Delete</a></button></div>";
             }
         } else {
-            echo "<h3 style='color:grey;'>&nbsp&nbsp--You have no polls!--</h3>";
+            echo "<h4 style='color:grey;'>&nbsp&nbsp--You have no polls!--</h4>";
         }
         ?>
     </div>
@@ -39,12 +43,18 @@ $AnsweredPolls = pollsAnswered($conn, $user);
                 echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $AnsweredPoll["id"] . ">" . $AnsweredPoll["pollsQues"] . "</a></div>";
             }
         } else {
-            echo "<p>Sorry no polls available!</p>";
+            echo "<h4 style='color:grey;'>&nbsp&nbsp--Sorry no polls available!--</h4>";
         }
         ?>
     </div>
 </div>
 <?php
+if (isset($_GET["error"])) {
+    $error = $_GET["error"];
+    if ($error == "deletionSuccess") {
+        echo "<div class='error-block'><p>Poll deleted successfully!</p></div>";
+    }
+}
 include_once "footer.php";
 ?>
 </body>

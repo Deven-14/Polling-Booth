@@ -12,7 +12,7 @@ $polls = fetchPublicPolls($conn);
             foreach ($polls as $poll) {
                 echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $poll["id"] . ">" . $poll["pollsQues"] . "</a>";
                 if ($poll["pollsDesc"]) {
-                    echo "<p>" . $poll["pollsDesc"] . "</p>";
+                    echo "<p class='desc'>" . $poll["pollsDesc"] . "</p>";
                 }
                 echo "</div>";
             }
@@ -36,4 +36,5 @@ if (isset($_GET["error"])) {
 include_once "footer.php";
 ?>
 </body>
+
 </html>

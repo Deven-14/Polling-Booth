@@ -8,24 +8,24 @@ if (!isset($_SESSION["userid"])) {
 ?>
 <div>
     <!-- <?php
-    if (isset($_GET["poll"])) {
-        echo "<p>Poll successfully created!</p>";
-        echo "<a href=vote.php?id=" . $_GET['poll'] . ">Go to poll</a>";
-        echo "<p>Click on the link below to create another poll</p>";
-        echo "<a href=createPoll.php>Click here!</a>";
-        exit();
-    }
-    ?> -->
+            if (isset($_GET["poll"])) {
+                echo "<p>Poll successfully created!</p>";
+                echo "<a href=vote.php?id=" . $_GET['poll'] . ">Go to poll</a>";
+                echo "<p>Click on the link below to create another poll</p>";
+                echo "<a href=createPoll.php>Click here!</a>";
+                exit();
+            }
+            ?> -->
     <section class="form">
         <h1 class="title2">Create a Poll</h1>
         <form class="contact-form row" action="includes/createPoll.inc.php" method="post">
             <div class="form-field col-lg-6">
-                <input id="question" name="question" class="input-text js-input" type="text" required>
+                <input placeholder="Question" id="question" name="question" class="input-text js-input" type="text" required>
                 <label class="label" for="question">Question</label>
             </div>
             <div class="form-field col-lg-6 ">
-                <input id="desc" name="desc" class="input-text js-input" type="text">
-                <label class="label" for="desc">Question Description </label>
+                <input placeholder="Question Description" id="description" name="desc" class="input-text js-input" type="text">
+                <label class="label" for="description">Question Description </label>
             </div>
             <div class="form-field col-lg-6 ">
                 <label for="start" style="color: white;">Start Date </label>
@@ -43,8 +43,8 @@ if (!isset($_SESSION["userid"])) {
             </script>
             <div class="form-field col-lg-12 ">
                 <ul id="options" style="list-style-type:none; margin-left: -30px">
-                    <li><input type="text" class="input-text js-input" name="options[]" placeholder="Category 1" required></li>
-                    <li><input type="text" class="input-text js-input" name="options[]" placeholder="Category 2" required></li>
+                    <li><input type="text" class="input-text js-input" name="options[]" placeholder="Choice 1" required></li>
+                    <li><input type="text" class="input-text js-input" name="options[]" placeholder="Choice 2" required></li>
                 </ul>
             </div>
             <div class="form-field col-lg-6">
@@ -64,9 +64,6 @@ if (!isset($_SESSION["userid"])) {
         </form>
     </section>
 </div>
-<?php
-include_once "footer.php";
-?>
 </body>
 
 </html>

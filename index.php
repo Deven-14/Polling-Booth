@@ -6,15 +6,15 @@ include_once "header.php";
         <div class="col-12 col-lg-5"><img id="poll-clipart" src="images/poll-clipart.png"></div>
         <div class="col-12 col-lg-7 direct-poll">
             <h2 id="sub-title">Polling Booth</h2>
-            <h4 id="description">
+            <h5>
                 Whatever the scenario or setting, Polling Booth's online polling helps you to get the answers you need.
                 Create online polls in seconds and see the results as your audience vote on any web-enabled device.
                 It's that simple.
                 Use it in your flipped classroom, in your lecture or just to amaze your audience.
-            </h4>
+            </h5>
             <?php
             if (isset($_SESSION["userid"])) {
-                echo "<h5>Hello there " . $_SESSION["useruid"] . "!</h5>";
+                echo "<h6>Hello there " . $_SESSION["useruid"] . "!</h5>";
             }
             ?>
             <button class="nice-buttons"><a href="polls.php">Public polls</a></li></button>
