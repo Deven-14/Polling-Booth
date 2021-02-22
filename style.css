@@ -417,6 +417,11 @@ progress::-webkit-progress-value {
     border-radius: 5px;
 }
 
+.error-block a,
+.error-block a:hover {
+    color: rgb(255, 255, 255);
+}
+
 .desc {
     margin-left: 5px;
     margin-right: 5px;

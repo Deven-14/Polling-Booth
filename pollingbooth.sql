@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2021 at 11:08 AM
+-- Generation Time: Feb 22, 2021 at 02:25 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
@@ -42,7 +42,6 @@ INSERT INTO `answers` (`id`, `usersId`, `pollsId`, `choicesId`) VALUES
 (8, 1, 7, 8),
 (11, 3, 7, 7),
 (16, 2, 7, 9),
-(18, 4, 9, 15),
 (20, 1, 10, 17),
 (21, 4, 10, 20),
 (23, 7, 21, 60),
@@ -56,7 +55,8 @@ INSERT INTO `answers` (`id`, `usersId`, `pollsId`, `choicesId`) VALUES
 (31, 4, 15, 40),
 (32, 4, 14, 36),
 (33, 4, 12, 33),
-(34, 7, 10, 16);
+(34, 7, 10, 16),
+(36, 4, 27, 76);
 
 -- --------------------------------------------------------
 
@@ -78,8 +78,6 @@ INSERT INTO `choices` (`id`, `pollsId`, `choicesName`) VALUES
 (7, 7, 'Oatmeal Raisin'),
 (8, 7, 'Chocolate Chip'),
 (9, 7, 'Ginger Snaps'),
-(14, 9, 'Tea'),
-(15, 9, 'Coffee'),
 (16, 10, 'Diluc'),
 (17, 10, 'Qiqi'),
 (18, 10, 'Keqing'),
@@ -115,7 +113,11 @@ INSERT INTO `choices` (`id`, `pollsId`, `choicesName`) VALUES
 (62, 22, 'Strawberry milkshake'),
 (63, 22, 'Hazelnut coffee'),
 (64, 23, 'Very fun'),
-(65, 23, 'Naah, hate them');
+(65, 23, 'Naah, hate them'),
+(74, 27, 'Happy'),
+(75, 27, 'Confused'),
+(76, 27, 'Sleepy'),
+(77, 27, 'Motivated');
 
 -- --------------------------------------------------------
 
@@ -139,7 +141,6 @@ CREATE TABLE `polls` (
 
 INSERT INTO `polls` (`id`, `pollsQues`, `pollsDesc`, `pollsStart`, `pollsEnd`, `usersId`, `pollsPrivate`) VALUES
 (7, 'What\'s your favourite kind of cookie?', 'Its for a party ', '2021-01-23', '2021-01-31', 1, 'N'),
-(9, 'Tea or coffee?', NULL, '2021-01-24', '2021-01-29', 4, 'N'),
 (10, 'Who\'s the best Genshin Impact character', 'Placing the best Genshin Impact characters in a tier list is a trick ask. There are some awesome playable characters and it\'s safe to say that there aren’t even that many terrible ones (well, except maybe poor Amber). But as you advance through the story while unlocking more characters and getting more lucky Gacha pulls, you will find that some teammates are way better than others. Who\'s your favourite character?', '2021-01-24', '2021-07-31', 1, 'N'),
 (12, 'What\'s website is your major source of memes?', 'A little survey!', '2021-01-28', '2021-04-17', 1, 'N'),
 (14, 'What dance style do you prefer?', 'We just want to know what the audience would love to watch :D', '2021-01-28', '2021-05-10', 1, 'N'),
@@ -149,7 +150,8 @@ INSERT INTO `polls` (`id`, `pollsQues`, `pollsDesc`, `pollsStart`, `pollsEnd`, `
 (20, 'Do pineapples belong on pizza?', 'It\'s the food choice that seems to divide the world. What do you think? Is pineapple an acceptable pizza topping?', '2021-02-01', '2021-10-02', 1, 'Y'),
 (21, 'Book vs Movie', 'Which one do you think is better at translating the intentions of the author of the original work?', '2021-02-01', '2021-10-02', 7, 'Y'),
 (22, 'What\'s your favourite drink?', NULL, '2021-02-01', '2021-02-02', 7, 'Y'),
-(23, 'Are polls fun?', NULL, '2021-02-06', '2021-03-31', 8, 'Y');
+(23, 'Are polls fun?', NULL, '2021-02-06', '2021-03-31', 8, 'Y'),
+(27, 'Describe your mood today..', NULL, '2021-02-22', '2021-03-30', 4, 'N');
 
 -- --------------------------------------------------------
 
@@ -176,7 +178,8 @@ INSERT INTO `users` (`id`, `usersUid`, `usersEmail`, `usersPwd`) VALUES
 (5, 'Deven', 'deven@gmail.com', '$2y$10$zd.AHhGBvy7W.qSd495jj.4ZSezwqURfA40A3YvIH1a9Q4srjaKe.'),
 (6, 'Bella', 'bella@gmail.com', '$2y$10$tGbh6OEfzIDMWaswwQfKAe.FJRKWsGqTF0qUTirGM.Fd.bCgWZyHi'),
 (7, 'Louis', 'louis@gmail.com', '$2y$10$SpzB1L6Cu5R0Dw.QBEbuKe7ZlY/ewbD4y0uHf7clR7iX8MvVZ/ZOG'),
-(8, 'Leon', 'leon@gmail.com', '$2y$10$lk/ip/Wcxr7MqoX1euSJwunPcpxNuqFAmLHPTM2792WKQF/AKuIJe');
+(8, 'Leon', 'leon@gmail.com', '$2y$10$lk/ip/Wcxr7MqoX1euSJwunPcpxNuqFAmLHPTM2792WKQF/AKuIJe'),
+(9, 'Ruby', 'ruby@gmail.com', '$2y$10$pFQSkoSK4Ox2GQ7FczrfR.m.7aQ3IILVWDQzVHmeOMsla1s6lNm66');
 
 --
 -- Indexes for dumped tables
@@ -187,8 +190,8 @@ INSERT INTO `users` (`id`, `usersUid`, `usersEmail`, `usersPwd`) VALUES
 --
 ALTER TABLE `answers`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usersId` (`usersId`),
   ADD KEY `pollsId` (`pollsId`),
+  ADD KEY `usersId` (`usersId`),
   ADD KEY `choicesId` (`choicesId`);
 
 --
@@ -219,25 +222,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `choices`
 --
 ALTER TABLE `choices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `polls`
 --
 ALTER TABLE `polls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -249,19 +252,24 @@ ALTER TABLE `users`
 ALTER TABLE `answers`
   ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`pollsId`) REFERENCES `polls` (`id`),
-  ADD CONSTRAINT `answers_ibfk_3` FOREIGN KEY (`choicesId`) REFERENCES `choices` (`id`);
+  ADD CONSTRAINT `answers_ibfk_3` FOREIGN KEY (`choicesId`) REFERENCES `choices` (`id`),
+  ADD CONSTRAINT `answers_ibfk_4` FOREIGN KEY (`pollsId`) REFERENCES `polls` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `answers_ibfk_5` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `answers_ibfk_6` FOREIGN KEY (`choicesId`) REFERENCES `choices` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `choices`
 --
 ALTER TABLE `choices`
-  ADD CONSTRAINT `choices_ibfk_1` FOREIGN KEY (`pollsId`) REFERENCES `polls` (`id`);
+  ADD CONSTRAINT `choices_ibfk_1` FOREIGN KEY (`pollsId`) REFERENCES `polls` (`id`),
+  ADD CONSTRAINT `choices_ibfk_2` FOREIGN KEY (`pollsId`) REFERENCES `polls` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `polls`
 --
 ALTER TABLE `polls`
-  ADD CONSTRAINT `polls_ibfk_1` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `polls_ibfk_1` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `polls_ibfk_2` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

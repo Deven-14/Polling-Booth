@@ -83,7 +83,8 @@ $choices = fetchChoices($conn, $id);
 if (isset($_GET["error"])) {
     $error = $_GET["error"];
     if ($error == "none") {
-        echo "<div class='error-block'><p>Poll created successfully!</p></div>";
+        echo "<div class='error-block'><p>Poll created successfully!<br>
+        Send this link <a href='http://localhost/Polling-Booth/vote.php?id=".$id."'>http://localhost/Polling-Booth/vote.php?id=".$id."</a>&nbspto your desired audience!</p></div>";
     } else if ($error == "stmtfailed") {
         echo "<div class='error-block'><p>Oops! Something went wrong</p></div>";
     } else if ($error == "descUpdated") {
