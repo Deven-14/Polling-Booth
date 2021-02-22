@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2021 at 08:06 AM
+-- Generation Time: Feb 22, 2021 at 11:08 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
@@ -39,24 +39,24 @@ CREATE TABLE `answers` (
 --
 
 INSERT INTO `answers` (`id`, `usersId`, `pollsId`, `choicesId`) VALUES
-(6, 1, 1, 2),
-(7, 2, 1, 1),
 (8, 1, 7, 8),
-(9, 1, 6, 10),
-(10, 3, 1, 1),
 (11, 3, 7, 7),
-(12, 3, 6, 6),
-(13, 3, 5, 4),
-(14, 3, 8, 13),
-(15, 2, 8, 12),
 (16, 2, 7, 9),
-(17, 2, 6, 10),
 (18, 4, 9, 15),
-(19, 1, 5, 5),
 (20, 1, 10, 17),
 (21, 4, 10, 20),
-(22, 5, 11, 21),
-(23, 7, 21, 60);
+(23, 7, 21, 60),
+(24, 8, 10, 17),
+(25, 8, 23, 64),
+(26, 1, 20, 58),
+(27, 3, 10, 20),
+(28, 3, 12, 25),
+(29, 3, 14, 36),
+(30, 3, 15, 42),
+(31, 4, 15, 40),
+(32, 4, 14, 36),
+(33, 4, 12, 33),
+(34, 7, 10, 16);
 
 -- --------------------------------------------------------
 
@@ -75,17 +75,9 @@ CREATE TABLE `choices` (
 --
 
 INSERT INTO `choices` (`id`, `pollsId`, `choicesName`) VALUES
-(1, 1, 'Awesome!'),
-(2, 1, 'Meh, I don\'t know'),
-(3, 1, 'I don\'t feel so good :('),
-(6, 6, 'Soft boiled'),
 (7, 7, 'Oatmeal Raisin'),
 (8, 7, 'Chocolate Chip'),
 (9, 7, 'Ginger Snaps'),
-(10, 6, 'Poached eggs'),
-(11, 8, 'Peanut butter on my hamburger'),
-(12, 8, 'Chips dipped in Nutella'),
-(13, 8, 'Uncooked Ramen noodles and ice cream'),
 (14, 9, 'Tea'),
 (15, 9, 'Coffee'),
 (16, 10, 'Diluc'),
@@ -93,17 +85,10 @@ INSERT INTO `choices` (`id`, `pollsId`, `choicesName`) VALUES
 (18, 10, 'Keqing'),
 (19, 10, 'Venti'),
 (20, 10, 'Mona'),
-(21, 11, 'Samsung'),
-(22, 11, 'Apple'),
 (23, 12, 'Twitter'),
 (25, 12, 'Tumblr'),
 (26, 12, 'Instagram'),
 (27, 12, 'Facebook'),
-(28, 13, 'Twitter'),
-(29, 13, 'Reddit'),
-(30, 13, 'Tumblr'),
-(31, 13, 'Instagram'),
-(32, 13, 'Facebook'),
 (33, 12, 'Reddit'),
 (35, 14, 'Salsa'),
 (36, 14, 'Cha Cha'),
@@ -128,7 +113,9 @@ INSERT INTO `choices` (`id`, `pollsId`, `choicesName`) VALUES
 (60, 21, 'Book'),
 (61, 21, 'Movie'),
 (62, 22, 'Strawberry milkshake'),
-(63, 22, 'Hazelnut coffee');
+(63, 22, 'Hazelnut coffee'),
+(64, 23, 'Very fun'),
+(65, 23, 'Naah, hate them');
 
 -- --------------------------------------------------------
 
@@ -151,22 +138,18 @@ CREATE TABLE `polls` (
 --
 
 INSERT INTO `polls` (`id`, `pollsQues`, `pollsDesc`, `pollsStart`, `pollsEnd`, `usersId`, `pollsPrivate`) VALUES
-(1, 'How do you feel today?', NULL, '2021-01-17', '2021-01-31', 1, 'N'),
-(2, 'Cats or dogs?', NULL, '2021-01-17', '2021-01-31', 2, 'N'),
-(3, 'What\'s your favourite drink?', NULL, '2021-01-22', '2021-01-31', 1, 'N'),
-(4, 'Which superpower would you like to have?', NULL, '2021-01-23', '2021-01-24', 1, 'N'),
-(6, 'How do you like your eggs?', 'Which one egg recipe do you like the most?', '2021-01-23', '2021-01-26', 1, 'N'),
 (7, 'What\'s your favourite kind of cookie?', 'Its for a party ', '2021-01-23', '2021-01-31', 1, 'N'),
 (9, 'Tea or coffee?', NULL, '2021-01-24', '2021-01-29', 4, 'N'),
 (10, 'Who\'s the best Genshin Impact character', 'Placing the best Genshin Impact characters in a tier list is a trick ask. There are some awesome playable characters and it\'s safe to say that there aren’t even that many terrible ones (well, except maybe poor Amber). But as you advance through the story while unlocking more characters and getting more lucky Gacha pulls, you will find that some teammates are way better than others. Who\'s your favourite character?', '2021-01-24', '2021-07-31', 1, 'N'),
-(12, 'What\'s website is your major source of memes?', NULL, '2021-01-28', '2021-04-17', 1, 'N'),
+(12, 'What\'s website is your major source of memes?', 'A little survey!', '2021-01-28', '2021-04-17', 1, 'N'),
 (14, 'What dance style do you prefer?', 'We just want to know what the audience would love to watch :D', '2021-01-28', '2021-05-10', 1, 'N'),
 (15, 'Why do you use snapchat?', NULL, '2021-01-28', '2021-06-30', 1, 'N'),
 (16, 'What emoji defines your aesthetic?', 'Choose 1 among the 5 options!', '2021-01-28', '2021-01-29', 4, 'N'),
 (18, 'Can you be racist to white people', NULL, '2021-01-28', '2021-06-21', 4, 'N'),
 (20, 'Do pineapples belong on pizza?', 'It\'s the food choice that seems to divide the world. What do you think? Is pineapple an acceptable pizza topping?', '2021-02-01', '2021-10-02', 1, 'Y'),
 (21, 'Book vs Movie', 'Which one do you think is better at translating the intentions of the author of the original work?', '2021-02-01', '2021-10-02', 7, 'Y'),
-(22, 'What\'s your favourite drink?', NULL, '2021-02-01', '2021-02-02', 7, 'Y');
+(22, 'What\'s your favourite drink?', NULL, '2021-02-01', '2021-02-02', 7, 'Y'),
+(23, 'Are polls fun?', NULL, '2021-02-06', '2021-03-31', 8, 'Y');
 
 -- --------------------------------------------------------
 
@@ -192,7 +175,8 @@ INSERT INTO `users` (`id`, `usersUid`, `usersEmail`, `usersPwd`) VALUES
 (4, 'Kat', 'kat@gmail.com', '$2y$10$KAttFpeWj8Ta6aMiQJf0seSFN8GEypg6oGWfzUv2K.C2Relv/ngb2'),
 (5, 'Deven', 'deven@gmail.com', '$2y$10$zd.AHhGBvy7W.qSd495jj.4ZSezwqURfA40A3YvIH1a9Q4srjaKe.'),
 (6, 'Bella', 'bella@gmail.com', '$2y$10$tGbh6OEfzIDMWaswwQfKAe.FJRKWsGqTF0qUTirGM.Fd.bCgWZyHi'),
-(7, 'Louis', 'louis@gmail.com', '$2y$10$SpzB1L6Cu5R0Dw.QBEbuKe7ZlY/ewbD4y0uHf7clR7iX8MvVZ/ZOG');
+(7, 'Louis', 'louis@gmail.com', '$2y$10$SpzB1L6Cu5R0Dw.QBEbuKe7ZlY/ewbD4y0uHf7clR7iX8MvVZ/ZOG'),
+(8, 'Leon', 'leon@gmail.com', '$2y$10$lk/ip/Wcxr7MqoX1euSJwunPcpxNuqFAmLHPTM2792WKQF/AKuIJe');
 
 --
 -- Indexes for dumped tables
@@ -202,19 +186,24 @@ INSERT INTO `users` (`id`, `usersUid`, `usersEmail`, `usersPwd`) VALUES
 -- Indexes for table `answers`
 --
 ALTER TABLE `answers`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usersId` (`usersId`),
+  ADD KEY `pollsId` (`pollsId`),
+  ADD KEY `choicesId` (`choicesId`);
 
 --
 -- Indexes for table `choices`
 --
 ALTER TABLE `choices`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pollsId` (`pollsId`);
 
 --
 -- Indexes for table `polls`
 --
 ALTER TABLE `polls`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usersId` (`usersId`);
 
 --
 -- Indexes for table `users`
@@ -230,25 +219,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `choices`
 --
 ALTER TABLE `choices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `polls`
 --
 ALTER TABLE `polls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `answers`
+--
+ALTER TABLE `answers`
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`pollsId`) REFERENCES `polls` (`id`),
+  ADD CONSTRAINT `answers_ibfk_3` FOREIGN KEY (`choicesId`) REFERENCES `choices` (`id`);
+
+--
+-- Constraints for table `choices`
+--
+ALTER TABLE `choices`
+  ADD CONSTRAINT `choices_ibfk_1` FOREIGN KEY (`pollsId`) REFERENCES `polls` (`id`);
+
+--
+-- Constraints for table `polls`
+--
+ALTER TABLE `polls`
+  ADD CONSTRAINT `polls_ibfk_1` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

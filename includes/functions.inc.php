@@ -260,6 +260,16 @@
         }
     }
 
+    function deleteAnswers($conn, $pollId)
+    {
+        $sql = "DELETE FROM answers WHERE pollsId = $pollId;";
+        if (!mysqli_query($conn, $sql))
+        {
+            header("location: ../profile.php?error=failedtodeleteanswers");
+            exit();
+        }
+    }
+
     function editDescField($conn, $pollId, $newDesc)
     {
         $sql = "UPDATE polls SET pollsDesc = ? WHERE id = $pollId;";
