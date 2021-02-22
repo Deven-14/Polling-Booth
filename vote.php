@@ -90,7 +90,7 @@ if (isset($_GET["error"])) {
         echo "<div class='error-block'><p>Description updated!</p></div>";
     }
 }
-include_once "footer.php";
+
 ?>
 </body>
 
