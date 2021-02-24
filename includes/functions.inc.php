@@ -235,6 +235,21 @@ function number_of_choices($conn, $pollsId)
     return false;
 }
 
+function selectedChoice($conn, $user, $poll)
+{
+    $sql = "SELECT choices.choicesName, answers.choicesId
+             FROM answers JOIN choices ON answers.choicesId = choices.id 
+             WHERE answers.pollsId = $poll AND answers.usersId = $user";
+    $result = mysqli_query($conn, $sql);
+    $rowsNum = mysqli_num_rows($result);
+    if ($rowsNum > 0)
+    {
+        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        return $rows;
+    }
+    return false;
+}
+
 function pollExpired($poll)
 {
     return (date("y-m-d") > $poll["pollsEnd"]) ? true : false;

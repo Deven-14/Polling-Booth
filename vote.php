@@ -36,6 +36,7 @@ $choices = fetchChoices($conn, $id);
         $rows = number_of_choices($conn, $_GET["id"]);
         $sum = array_sum(array_column($rows, 'choice_count'));
         $selectedChoiceIds = array_column($rows, 'choicesId');
+        $userSelectedChoice = selectedChoice($conn, $_SESSION["userid"], $_GET["id"])[0];
         foreach ($choices as $choice) {
             if (!in_array($choice["id"], $selectedChoiceIds)) {
                 echo "<div class='choice poll-option'>";
@@ -45,7 +46,10 @@ $choices = fetchChoices($conn, $id);
                 foreach ($rows as $row) {
                     if ($row['choicesId'] == $choice["id"]) {
                         echo "<div class='choice poll-option'>";
-                        echo "<label>" . $row["choicesName"] . " - " . round($row["choice_count"] / $sum, 3) * 100 . "%</label>";
+                        if ($userSelectedChoice["choicesId"] == $choice["id"])
+                            echo "<label>" . $row["choicesName"] . " - " . round($row["choice_count"] / $sum, 3) * 100 . "% <i class='fa fa-check' aria-hidden='true'></i></label>";
+                        else
+                            echo "<label>" . $row["choicesName"] . " - " . round($row["choice_count"] / $sum, 3) * 100 . "%</label>";
                         echo "<progress max='100' value='" . round($row["choice_count"] / $sum, 3) * 100 . "'></progress></div>";
                         break;
                     }
