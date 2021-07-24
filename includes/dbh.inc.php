@@ -4,8 +4,9 @@
     $dBUsername = "root";
     $dBPassword = "";
     $dBName = "pollingbooth";
+    $dBPort = 3307;
 
-    $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+    $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName, $dBPort);
 
     if (!$conn)
     {

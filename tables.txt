@@ -1,0 +1,9 @@
+create table users (emailId varchar(256) NOT NULL, name varchar(256) NOT NULL, passwd varchar(256) NOT NULL, PRIMARY KEY(emailId));
+
+create table categories (type varchar(256) not null, description varchar(256) not null, primary key(type));
+
+create table polls (pollId int(4) AUTO_INCREMENT not null, userId varchar(256) NOT NULL, type varchar(256) NOT NULL, question varchar(256) NOT NULL, description varchar(256), startDate date NOT NULL, endDate date NOT NULL, isPrivate char(1) NOT NULL, primary key(pollId), FOREIGN KEY(userId) REFERENCES users(emailId) on update CASCADE on delete CASCADE, FOREIGN key(type) REFERENCES categories(type) on delete CASCADE on UPDATE cascade);
+
+create table choices (pollId int(4) not null, choiceName varchar(256) not null, nSelected int(4) not null DEFAULT 0, PRIMARY KEY(pollId, choiceName), FOREIGN KEY(pollId) REFERENCES polls(pollId) on update cascade on delete cascade);
+
+create table answers (userId varchar(256) not null, pollId int(4) not null, choiceName varchar(256) not null, PRIMARY key(userId, pollId), FOREIGN key(userId) REFERENCES users(emailId) on UPDATE CASCADE on DELETE CASCADE, FOREIGN key(pollId, choiceName) REFERENCES choices(pollId, choiceName) on UPDATE CASCADE on DELETE CASCADE);
