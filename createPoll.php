@@ -35,6 +35,8 @@ if (!isset($_SESSION["userid"])) {
                 <label for="end" style="color: white;">End Date </label>
                 <input id="end" name="end" class="input-text js-input" type="date">
             </div>
+
+            
             <script>
                 defaultDateToday("start");
                 setMinDateToday("start");
@@ -47,6 +49,17 @@ if (!isset($_SESSION["userid"])) {
                     <li><input type="text" class="input-text js-input" name="options[]" placeholder="Choice 2" required></li>
                 </ul>
             </div>
+            <div class="form-field col-lg-6">
+                <label class="custom-control-label" for="category" style="color: white;">Choose a category:</label>
+                <select name="category" id="type">
+                    <option value="school">School</option>
+                    <option value="work">Work</option>
+                    <option value="home">Home</option>
+                    <option value="other">Other</option>
+                </select>
+            </div> 
+            <div class="form-field col-lg-6">
+            </div> 
             <div class="form-field col-lg-6">
                 <input class="submit-btn" type="button" value="Add more fields" onclick="addField()">
             </div>

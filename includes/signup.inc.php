@@ -14,31 +14,27 @@
             exit();
         }*/
 
-        if (invalidUid($uid) !== false) 
-        {
+        if (invalidUid($uname) !== false) {
             header("location: ../signup.php?error=invaliduid");
             exit();
         }
 
-        if (invalidEmail($email) !== false) 
-        {
+        if (invalidEmail($email) !== false) {
             header("location: ../signup.php?error=invalidemail");
             exit();
         }
 
-        if (matchPassword($pwd, $pwdrepeat) !== false)
-        {
+        if (matchPassword($pwd, $pwdrepeat) !== false) {
             header("location: ../signup.php?error=passwordsdontmatch");
             exit();
         }
         
-        if (uidExists($conn, $uid, $email) !== false)
-        {
+        if (uidExists($conn, $email) !== false) {
             header("location: ../signup.php?error=uidexists");
             exit();
         }
         // if you got to this point there is no error
-        createUser($conn, $uid, $email, $pwd);
+        createUser($conn, $email, $uname, $pwd);
     }
     else
     {

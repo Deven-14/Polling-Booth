@@ -9,7 +9,7 @@
         exit();
     }
 
-    $pollId = $_GET["id"];
+    $poll = $_GET["id"];
     extract($_POST, EXTR_SKIP);
-    editDescField($conn, $pollId, $newDesc);
-    header("location: ../vote.php?id=".$pollId."&error=descUpdated");
+    editDescField($conn, $poll, $newDesc);
+    header("location: ../vote.php?id=".$poll."&error=descUpdated");

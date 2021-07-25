@@ -15,10 +15,12 @@
         header("location: ../signup.php?error=usernotloggedin");
         exit();
     }
-    else
-    {
-        $user = $_SESSION["userid"];
-        $poll = $_POST["poll"];
-        $choice = $_POST["choice"];
-        vote($conn, $user, $poll, $choice);
-    }  
+
+    // print_r($_POST);
+    // print_r($_SESSION);
+    $user = $_SESSION["userid"];
+    $poll = $_POST["poll"];
+    $choice = $_POST["choice"];
+    // echo $user ." " . $poll . " ".$choice;
+    vote($conn, $user, $poll, $choice); 
+

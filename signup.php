@@ -5,7 +5,7 @@ include_once "header.php";
     <h2>Sign up!</h2>
     <hr>
     <form action="includes/signup.inc.php" method="post">
-        <input type="text" name="uid" id="uid" placeholder="Username" required><br>
+        <input type="text" name="uname" id="uname" placeholder="Username" required><br>
         <input type="text" name="email" id="email" placeholder="Email" required><br>
         <input type="password" name="pwd" id="pwd" placeholder="Password" required><br>
         <input type="password" name="pwdrepeat" id="pwdrepeat" placeholder="Type password again" required><br>

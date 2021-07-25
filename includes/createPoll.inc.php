@@ -9,7 +9,7 @@
         header("location: ../createPoll.php");
         exit();
     }
-
+    
     if (!isset($_POST["private"]))
     {
         $_POST["private"] = "N";
@@ -22,12 +22,11 @@
         $desc = NULL;
     }
 
-    $pollId = createPoll($conn, $question, $start, $end, $user, $desc, $private);
+    $pollId = createPoll($conn, $user, $category, $question, $desc, $start, $end, $private);
 
     foreach($options as $option)
     {
-        createOption($conn, $option, $pollId);
+        createOption($conn, $pollId, $option);
     }
 
     header("location: ../vote.php?id=".$pollId."&error=none");
-

@@ -14,10 +14,11 @@ include_once "header.php";
             </h5>
             <?php
             if (isset($_SESSION["userid"])) {
-                echo "<h6>Hello there " . $_SESSION["useruid"] . "!</h5>";
+                echo "<h6>Hello there " . $_SESSION["username"] . "!</h5>";
             }
             ?>
-            <button class="nice-buttons"><a href="polls.php">Public polls</a></li></button>
+            <!-- <button class="nice-buttons"><a href="polls.php">Public polls</a></li></button> -->
+            <button class="nice-buttons"><a href="categories.php">Public polls</a></li></button>
             <button class="nice-buttons"><a href="createPoll.php">Create a poll</a></button>
         </div>
     </div>

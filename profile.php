@@ -11,24 +11,26 @@ if (!isLoggedIn($_SESSION)) {
 $user = $_SESSION["userid"];
 $polls = fetchUsersPolls($conn, $user);
 $AnsweredPolls = pollsAnswered($conn, $user);
+
+// print_r($polls);
 ?>
 <div class="polls conatiner">
     <div class="row">
         <div class="error-block">
-        <h2>Hello user <?php echo $_SESSION["useruid"]; ?>!</h2>
+        <h2>Hello user <?php echo $_SESSION["username"]; ?>!</h2>
         </div>
         <h2>Your polls:</h2>
         <?php
         if (!empty($polls)) {
             foreach ($polls as $poll) {
-                echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $poll["id"] . ">" . $poll["pollsQues"] . "</a>";
-                $category = ($poll['pollsPrivate'] === 'Y') ? "Private" : "Public";
-                echo "<h6 class='category'>". $category . "</h6>";
-                if ($poll["pollsDesc"]) {
-                    echo "<p class='desc'>" . $poll["pollsDesc"] . "</p>";
+                echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $poll["pollId"] . ">" . $poll["question"] . "</a>";
+                $private = ($poll['isPrivate'] === 'Y') ? "Private" : "Public";
+                echo "<h6 class='category'>". $private . "</h6>";
+                if ($poll["description"]) {
+                    echo "<p class='desc'>" . $poll["description"] . "</p>";
                 }
-                echo "<button class='submit-btn prof-btn'><a href='editPoll.php?poll=" . $poll["id"] . "'>Edit</a></button>";
-                echo "<button class='submit-btn prof-btn'><a href='includes/deletePoll.inc.php?poll=" . $poll["id"] . "'>Delete</a></button></div>";
+                echo "<button class='submit-btn prof-btn'><a href='editPoll.php?poll=" . $poll["pollId"] . "'>Edit</a></button>";
+                echo "<button class='submit-btn prof-btn'><a href='includes/deletePoll.inc.php?poll=" . $poll["pollId"] . "'>Delete</a></button></div>";
             }
         } else {
             echo "<h4 style='color:grey;'>&nbsp&nbsp--You have no polls!--</h4>";
@@ -40,7 +42,7 @@ $AnsweredPolls = pollsAnswered($conn, $user);
         <?php
         if (!empty($AnsweredPolls)) {
             foreach ($AnsweredPolls as $AnsweredPoll) {
-                echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $AnsweredPoll["id"] . ">" . $AnsweredPoll["pollsQues"] . "</a></div>";
+                echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $AnsweredPoll["pollId"] . ">" . $AnsweredPoll["question"] . "</a></div>";
             }
         } else {
             echo "<h4 style='color:grey;'>&nbsp&nbsp--Sorry no polls available!--</h4>";

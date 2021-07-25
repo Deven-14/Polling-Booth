@@ -5,9 +5,9 @@
 
     if(isset($_POST["submit"]))
     {
-        $username = $_POST["name"];
+        $email = $_POST["email"];
         $pwd = $_POST["pwd"];
-        loginUser($conn, $username, $pwd);
+        loginUser($conn, $email, $pwd);
     }
     else // if someone sneakily accessed this page via the url
     {

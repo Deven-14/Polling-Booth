@@ -14,6 +14,7 @@ if (!isset($_GET["id"])) {
 }
 
 $id = (int)$_GET["id"];
+$user = $_SESSION["userid"];
 $poll = fetchPoll($conn, $id);
 
 if (!$poll) {
@@ -22,18 +23,31 @@ if (!$poll) {
 }
 
 $choices = fetchChoices($conn, $id);
-
 ?>
+
 <div>
     <?php
     echo '<div class="poll-center">';
-    if (pollAnswered($conn, $_SESSION["userid"], $_GET["id"]) === true && pollExpired($poll) === true) {
-        echo "<h2 style='color:#66fcf1;'>" . $poll["pollsQues"] . "</h2>";
-        if ($poll["pollsDesc"]) {
-            echo "<p>" . $poll["pollsDesc"] . "</p>";
+    if (pollAnswered($conn, $user, $id) === true && pollExpired($poll) === true) {
+        echo "<h2 style='color:#66fcf1;'>" . $poll["question"] . "</h2>";
+        if ($poll["description"]) {
+            echo "<p>" . $poll["description"] . "</p>";
         }
         echo "<h5 style='color:white;'>Poll answered - </h5>";
-        $rows = number_of_choices($conn, $_GET["id"]);
+
+        // i think
+        // $rows = number_of_choices ($conn, $id); // returning choiceName, nSelected -- redundant $choices
+        $sum = array_sum(array_column($choices, 'nSelected'));
+        $userSelectedChoice = selectedChoice($conn, $user, $id);
+        foreach ($choices as $choice) {
+            echo "<div class='choice poll-option'>";
+            if ($userSelectedChoice["choiceName"] == $choice["choiceName"])
+                echo "<label>" . $choice["choiceName"] . " - " . round($choice["nSelected"] / $sum, 3) * 100 . "% <i class='fa fa-check' aria-hidden='true'></i></label>";
+            else 
+                echo "<label>" .  $choice["choiceName"] . " - " . round($choice["nSelected"] / $sum, 3) * 100 . "%</label>";
+            echo "<progress max='100' value='" . round($choice["nSelected"] / $sum, 3) * 100 . "'></progress></div>";
+        }
+        /*$rows = number_of_choices($conn, $_GET["id"]); 
         $sum = array_sum(array_column($rows, 'choice_count'));
         $selectedChoiceIds = array_column($rows, 'choicesId');
         $userSelectedChoice = selectedChoice($conn, $_SESSION["userid"], $_GET["id"])[0];
@@ -56,6 +70,7 @@ $choices = fetchChoices($conn, $id);
                 }
             }
         }
+        */
         exit();
     }
     echo '</div>';
@@ -63,16 +78,16 @@ $choices = fetchChoices($conn, $id);
     <div class="poll-center">
         <form action="includes/vote.inc.php" method="POST">
             <?php
-            echo "<h2 style='color:#66fcf1;'>" . $poll["pollsQues"] . "</h2>";
-            if ($poll["pollsDesc"]) {
-                echo "<p>" . $poll["pollsDesc"] . "</p><br>";
+            echo "<h2 style='color:#66fcf1;'>" . $poll["question"] . "</h2>";
+            if ($poll["description"]) {
+                echo "<p>" . $poll["description"] . "</p><br>";
             }
             ?>
             <?php
             if (!empty($choices)) {
                 foreach ($choices as $index => $choice) {
-                    echo "<div class='choice poll-option'><input type='radio' required name='choice' value=" . $choice["id"] . " id=" . $index . ">";
-                    echo "<label for=" . $index . ">" . $choice["choicesName"] . "</label></div>";
+                    echo "<div class='choice poll-option'><input type='radio' required name='choice' value='" . $choice["choiceName"] ."' id='" . $choice["choiceName"] . "'>";
+                    echo "<label for='" . $choice["choiceName"] . "'>" . $choice["choiceName"] . "</label></div>";
                 }
                 echo '<button class="submit-btn-center" type="submit" name="submit">Submit</button></br>';
                 echo '<input type="hidden" name="poll" value=' . $id . '>';
@@ -100,3 +115,4 @@ if (isset($_GET["error"])) {
 </body>
 
 </html>
+*/

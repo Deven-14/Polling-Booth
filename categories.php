@@ -2,19 +2,17 @@
 include_once "header.php";
 require_once "includes/dbh.inc.php";
 require_once "includes/functions.inc.php";
-$category = $_GET["type"];
-$polls = fetchPublicPolls($conn, $category);
+$categories = fetchCategories($conn);
 ?>
-
-<h2 class="text-center mb-5" style="color: white; font-size:50px;">Polls</h2>
+<h2 class="text-center mb-5" style="color: white; font-size:50px;">Categories</h2>
 <div class="polls container">
     <div class="row">
         <?php
-        if (!empty($polls)) {
-            foreach ($polls as $poll) {
-                echo "<div class='poll-container col-6 col-sm-4'><a href=vote.php?id=" . $poll["pollId"] . ">" . $poll["question"] . "</a>";
-                if ($poll["description"]) {
-                    echo "<p class='desc'>" . $poll["description"] . "</p>";
+        if (!empty($categories)) {
+            foreach ($categories as $category) {
+                echo "<div class='poll-container col-6 col-sm-4'><a href=polls.php?type=" . $category["type"] . ">" . $category["type"] . "</a>";
+                if ($category["description"]) {
+                    echo "<p class='desc'>" . $category["description"] . "</p>";
                 }
                 echo "</div>";
             }
