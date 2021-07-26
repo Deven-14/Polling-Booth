@@ -10,14 +10,14 @@ $categories = fetchCategories($conn);
         <?php
         if (!empty($categories)) {
             foreach ($categories as $category) {
-                echo "<div class='poll-container col-6 col-sm-4'><a href=polls.php?type=" . $category["type"] . ">" . $category["type"] . "</a>";
+                echo "<div class='poll-container col-6 col-sm-4'><a href=polls.php?type=" .urlencode($category["type"]) . ">" . $category["type"] . "</a>";
                 if ($category["description"]) {
                     echo "<p class='desc'>" . $category["description"] . "</p>";
                 }
                 echo "</div>";
             }
         } else {
-            echo "<h3 style='color:grey;'>&nbsp&nbsp--Sorry no polls available!--</h3>";
+            echo "<h3 style='color:grey;'>&nbsp&nbsp--Sorry no categories available!--</h3>";
         }
         ?>
     </div>

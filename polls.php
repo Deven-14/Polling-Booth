@@ -6,7 +6,8 @@ $category = $_GET["type"];
 $polls = fetchPublicPolls($conn, $category);
 ?>
 
-<h2 class="text-center mb-5" style="color: white; font-size:50px;">Polls</h2>
+
+<h2 class="text-center mb-5" style="color: white; font-size:50px;"><?php echo $category ?> - Polls</h2>
 <div class="polls container">
     <div class="row">
         <?php

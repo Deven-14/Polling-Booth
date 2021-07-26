@@ -1,0 +1,41 @@
+Folder PATH listing for volume OS
+Volume serial number is CCBA-FCCE
+C:.
+|   about.php
+|   categories.php
+|   createPoll.php
+|   editPoll.php
+|   footer.php
+|   header.php
+|   index.php
+|   login.php
+|   pollingbooth.sql
+|   pollingbooth_old.sql
+|   polls.php
+|   profile.php
+|   README.md
+|   schema.PNG
+|   script.js
+|   signup.php
+|   style.css
+|   tables.txt
+|   tree.txt
+|   vote.php
+|   
++---images
+|       createPollImg.PNG
+|       dark.jpg
+|       poll-clipart.png
+|       
+\---includes
+        createPoll.inc.php
+        dbh.inc.php
+        deletePoll.inc.php
+        editPoll.inc.php
+        encryption.inc.php
+        functions.inc.php
+        login.inc.php
+        logout.inc.php
+        signup.inc.php
+        vote.inc.php
+        
